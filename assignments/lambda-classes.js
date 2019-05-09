@@ -25,6 +25,18 @@ class Instructor extends Person{
     grade(student, subject){
         return `${student.name} receives a perfect score on ${subject}!`
     }
+    gradeEvaluation(student){
+        const gradingSystem = [
+            function(){
+                student.grade += Math.floor(Math.random() * 25) 
+                return student.grade},
+            function(){
+                student.grade -= Math.floor(Math.random() * 25)
+                return student.grade}
+        ]
+        let randomSelection = Math.floor(Math.random() *2)
+        return gradingSystem[randomSelection]()
+    }
 }
 
 class Student extends Person{
@@ -33,6 +45,7 @@ class Student extends Person{
         this.previousBackground = studentAttributes.previousBackground
         this.className = studentAttributes.className
         this.favSubjects = studentAttributes.favSubjects
+        this.grade = studentAttributes.grade
     }
     listsSubjects(){
         let i = 0
@@ -47,6 +60,14 @@ class Student extends Person{
     sprintChallenge(subject){
         return `${this.name} has begun sprint challenge on ${subject}.`
     }
+    graduate(){
+        if(this.grade >= 70){
+            return `${this.name} has passed Lambda's vigorous curriculum and is able to graduate! \n Congradulations ${this.name} on Graduating!`
+        }else{
+            return `${this.name} was unable to pass Lambda's vigorous curriculum and will continue to work through it.\n Do not be discourage ${this.name}, we believe in you!`
+        }
+    }
+
 }
 
 class ProjectManager extends Instructor{
@@ -72,8 +93,8 @@ const student1 = new Student({
     location: 'Philly',
     previousBackground: "Exchange Systems Admin",
     className: "Web20",
-    favSubjects: ["Pythong", "Javascript", "DJango"]
-
+    favSubjects: ["Pythong", "Javascript", "DJango"],
+    grade: 50
 })
 
 const student2 = new Student({
@@ -82,7 +103,8 @@ const student2 = new Student({
     location: 'San Francisco',
     previousBackground: "IT Support Specalist",
     className: "Web20",
-    favSubjects: ["PowerShell", "BreakFix", "Networking", "Telecommunication"]
+    favSubjects: ["PowerShell", "BreakFix", "Networking", "Telecommunication"],
+    grade: 50
 
 })
 
@@ -92,8 +114,8 @@ const student3 = new Student({
     location: 'Phoenix',
     previousBackground: "Automotive Dealer",
     className: "Web18",
-    favSubjects: ["Math", "Sociology", "English"]
-
+    favSubjects: ["Math", "Sociology", "English"],
+    grade: 50
 })
 
 const instructor1 = new Instructor({
@@ -151,3 +173,8 @@ console.log(projectManager1.debugsCode(student3, "Python"))
 console.log(projectManager1.standUp("Web20_Jade"))
 console.log(projectManager2.speak())
 console.log(projectManager2.grade(student2, "CSS"))
+
+console.log(student1.grade)
+console.log(instructor1.gradeEvaluation(student1))
+console.log(projectManager1.gradeEvaluation(student1))
+console.log(student1.graduate())
